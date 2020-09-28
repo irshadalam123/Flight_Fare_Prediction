@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+  <div class="container">
+
+
+
+    <form action="\predict" method="post">
+
+      <br/>
+      <br/>
+      <br/>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Departure Date</h5>
+                        <!-- Departure -->
+                        <input type="datetime-local" name="depTime" id="depTime" required="required">
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Arrival Date</h5>
+                        <!-- Arrival -->
+                        <input type="datetime-local" name="arrTime" id="arrTime" required="required">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+              <div class="card">
+                  <div class="card-body">
+                      <!-- Source -->
+                      <h5 class="card-title">Source</h5>
+                      <select name="Source" id="source" required="required" onchange="javascript: sourceFunction(this.options[this.selectedIndex].value);">
+                          <option value="Delhi">Delhi</option>
+                          <option value="Kolkata">Kolkata</option>
+                          <option value="Mumbai">Mumbai</option>
+                          <option value="Chennai">Chennai</option>
+                          <option value="Banglore">Banglore</option>
+                      </select>
+                  </div>
+              </div>
+          </div>
+
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+        <div class="row">
+            
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Destination</h5>
+                        <!-- Destination -->
+                        <select name="Destination" id="destination" required="required" onchange="destinationFunction(this.options[this.selectedIndex].value);">
+                            <option value="Cochin">Cochin</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="New Delhi">New Delhi</option>
+                            <option value="Hyderabad">Hyderabad</option>
+                            <option value="Kolkata">Kolkata</option>
+                            <option value="Banglore">Banglore</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+              <div class="card">
+                  <div class="card-body">
+                      <h5 class="card-title">Stopage</h5>
+                      <!-- Total Stops -->
+                      <select name="stops" required="required">
+                          <option value="0">Non-Stop</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                      </select>
+                  </div>
+              </div>
+          </div>
+          <div class="col-sm-4">
+              <div class="card">
+                  <div class="card-body">
+                      <h5 class="card-title">Airlines</h5>
+                      <!-- Airline -->
+                      <select name="airline" id="airline" required="required">
+                          <option value="Jet Airways">Jet Airways</option>
+                          <option value="IndiGo">IndiGo</option>
+                          <option value="Air India">Air India</option>
+                          <option value="Multiple carriers">Multiple carriers</option>
+                          <option value="SpiceJet">SpiceJet</option>
+                          <option value="Vistara">Vistara</option>
+                          <option value="Air Asia">Air Asia</option>
+                          <option value="GoAir">GoAir</option>
+                          <option value="Multiple carriers Premium economy">Multiple carriers Premium economy
+                          </option>
+                          <option value="Jet Airways Business">Jet Airways Business</option>
+                          <option value="Vistara Premium economy">Vistara Premium economy</option>
+                          <option value="Trujet">Trujet</option>
+                      </select>
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <br>
+        <br>
+        <br>
+        <!-- Submit -->
+        <input type="submit" value="Submit" class="btn btn-secondary">
+    </form>
+
+    <br>
+    <br>
+    <h3>{{ prediction_text }}</h3>
+
+</div>
+
+</body>
+
+<script language="javascript" type="text/javascript">
+  function destinationFunction(slistindex)
+  {
+      switch (slistindex)
+      {
+        case "Delhi" :
+            
+            break;
+        case "Kolkata" :
+            
+            break;
+
+        case "Banglore" :
+            break;
+      }
+      return true;
+  }
+
+  function sourceFunction(dlistindex)
+  {
+      var temp1 = false;
+      var temp2 = false;
+
+      switch (dlistindex)
+      {
+        case "Delhi" :
+            var d = document.getElementById("destination");
+
+            for (var i = 0; i < d.length; i++) {
+              if(d.options[i].text == "Delhi"){
+                d.remove(i);
+                // continue;
+              }
+
+              if(d.options[i].text == "Kolkata"){
+                temp1 = true;
+              }
+              if(d.options[i].text == "Banglore"){
+                temp2 = true;
+              }
+            }
+            if(!temp1){
+                var c = document.createElement("option");
+                c.text = "Kolkata";
+                d.options.add(c, 1);
+              }
+              if(!temp2){
+                var c = document.createElement("option");
+                c.text = "Banglore";
+                d.options.add(c, 4);
+              }
+
+            break;
+        case "Kolkata" :
+            var k = document.getElementById("destination");
+            for (var i = 0; i < k.length; i++) {
+              if(k.options[i].text == "Kolkata"){
+                k.remove(i);
+              }
+
+              if(k.options[i].text == "Delhi"){
+                temp1 = true;
+              }
+              if(k.options[i].text == "Banglore"){
+                temp2 = true;
+              }
+            }
+
+            if(!temp1){
+                var c = document.createElement("option");
+                c.text = "Delhi";
+                k.options.add(c, 0);
+              }
+              if(!temp2){
+                var c = document.createElement("option");
+                c.text = "Banglore";
+                k.options.add(c, 4);
+              }
+            break;
+        case "Banglore" :
+            var b = document.getElementById("destination");
+            for (var i = 0; i < b.length; i++) {
+                var txt = b.options[i].text;
+                if(txt == "Banglore"){
+                  b.remove(i);
+                }
+                if(txt === "Delhi"){
+                  temp1 = true;
+                }
+                if(txt === "Kolkata"){
+                  temp2 = true;
+                }
+
+              }
+
+              if(!temp1){
+                  var c = document.createElement("option");
+                  c.text = "Delhi";
+                  b.options.add(c, 0);
+                }
+                if(!temp2){
+                  var c = document.createElement("option");
+                  c.text = "Kolkata";
+                  b.options.add(c, 1);
+                }
+            break;
+      }
+      return true;
+  }
+  </script>
+
+</html>
